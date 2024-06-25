@@ -1,0 +1,526 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Author" content="Manojkumar Sikhakolli">
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2487.5">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Times}
+    p.p2 {margin: 0.0px 0.0px 0.0px 36.0px; font: 14.0px Times}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify; font: 12.0px Times}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: justify; font: 14.0px Times}
+    p.p6 {margin: 0.0px 0.0px 0.0px 144.0px; font: 20.0px Times}
+    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 14.0px Times; min-height: 18.0px}
+    span.s1 {font: 12.0px Times}
+    span.s2 {font: 14.0px Times}
+    span.Apple-tab-span {white-space:pre}
+  </style>
+</head>
+<body>
+<p class="p1"><b>1.Display the names and ages of programmers</b></p>
+<p class="p1">select pname,extract(year from sysdate)-extract(year from dob) as age from programmer;</p>
+<p class="p1"><b>2.</b><span class="s1"><b> </b></span><b>Which female programmer earning more than 3000 doesn’t know C++, Oracle or dbase</b></p>
+<p class="p1">select pname from programmer where gender='f' and salary&gt;3000 and prof1 not in ('c++','dbase','oracle') and prof2 not in ('c++','dbase','oracle');</p>
+<p class="p2"><b><span class="Apple-tab-span">	</span>•<span class="Apple-tab-span">	</span>Which institute has the most number of students</b></p>
+<p class="p1">select splace,count(splace) from studies group by splace;</p>
+<p class="p1"><b>4.</b><span class="s1"><b> </b></span><b>Display language wise count of prof1 <span class="Apple-converted-space"> </span></b></p>
+<p class="p1">select prof1,count(prof1) from programmer group by prof1;</p>
+<p class="p1"><b>5.Display the number of people born in each year</b></p>
+<p class="p1">select extract(year from dob),count(extract(year from dob)) from programmer group by extract(year from dob);<span class="Apple-converted-space"> </span></p>
+<p class="p1"><b>6.</b><span class="s1"><b> </b></span><b>Display details of programmers draw 2000-4000</b></p>
+<p class="p1">select pname from programmer where salary between 2000 and 4000;</p>
+<p class="p1"><b>7.</b><span class="s1"><b> </b></span><b>Display the programmers name and their software’s</b></p>
+<p class="p1">select pname,title from software;</p>
+<p class="p1"><b>8.</b><span class="s1"><b> </b></span><b>What is the highest numbers of copies sold by a package</b></p>
+<p class="p1">SELECT MAX(no_of_products_sold) AS highest_sold FROM Software;</p>
+<p class="p1"><b>9.Display each institute name with number of students</b></p>
+<p class="p1">SELECT study_place, COUNT(*) AS student_count FROM Studies GROUP BY study_place;</p>
+<p class="p3"><b>10.Display the number of people born in each month</b></p>
+<p class="p3">SELECT MONTH(date_of_birth) AS birth_month, COUNT(*) AS count FROM Programmer GROUP BY birth_month;</p>
+<p class="p3"><span class="s2"><b>11.</b></span><b> What are the languages known by male programmers</b></p>
+<p class="p1">select prof1 from programmer where gender='m' union select prof2 from programmer where gender='m';</p>
+<p class="p3"><span class="s2"><b>12.</b></span><b> Display lowest course fee</b></p>
+<p class="p1">select min(cost) from studies;</p>
+<p class="p4"><span class="s2"><b>13.</b></span><b> Which course has been done by most of the students</b></p>
+<p class="p1">select course,count(course) from studies group by course having count(course)=(select max(student) from(select count(course) as student from studies group by course));</p>
+<p class="p3"><span class="s2"><b>14.</b></span><b> Display each institute name with number of courses, average cost per course</b></p>
+<p class="p3">SELECT study_place, COUNT(course_name) AS number_of_courses, AVG(course_cost) AS average_cost FROM Studies GROUP BY study_place;</p>
+<p class="p3"><span class="s2"><b>15.</b></span><b> Display the number of people studied in each institute</b></p>
+<p class="p1">select splace,count(course) from studies group by splace;</p>
+<p class="p4"><span class="s2"><b>16.</b></span><b> Display the details of software developed by Ramesh?</b></p>
+<p class="p1">select * from software where pname='ramesh';</p>
+<p class="p3"><span class="s2"><b>17.</b></span><b> How many people draw 2000-4000</b></p>
+<p class="p3">SELECT COUNT(*) AS count FROM Programmer WHERE salary BETWEEN 2000 AND 4000;</p>
+<p class="p3"><span class="s2"><b>18.</b></span><b> Which is the costliest software developed in .NET</b></p>
+<p class="p1">select max(scost) from software where dev='.net' group by dev;</p>
+<p class="p3"><span class="s2"><b>19.</b></span><b> Display the sales cost of the software’s developed by each programmer</b></p>
+<p class="p1">select pname,sum(dcost) from software group by pname;</p>
+<p class="p3"><span class="s2"><b>20.</b></span><b> Which language have been stated as prof1 by most of the programmers</b></p>
+<p class="p5">select prof1,count(prof1) from programmer group by prof1 having count(prof1)=(select max(prof1_count) from (select count(prof1) as prof1_count from programmer group by prof1));</p>
+<p class="p3"><span class="s2"><b>21.</b></span><b> What is the price of the costliest software developed in BASIC?</b></p>
+<p class="p1">select max(scost) from software where dev='basic' group by dev;</p>
+<p class="p3"><b>22.Display the details of programmers who don’t know Fortran, Cobol or .NET</b></p>
+<p class="p1">select * from programmer where prof1 not in ('fortran','cobol','.net') and prof2 not in ('fortran','cobol','.net');</p>
+<p class="p3"><span class="s2"><b>23.</b></span><b> Display the names of programmers whose names contains up to 5 characters</b></p>
+<p class="p3">select pname from programmer where length(pname)&lt;=5;</p>
+<p class="p3"><span class="s2"><b>24.</b></span><b> Display the number of softwares sold by each programmer</b></p>
+<p class="p1">select pname,count(sold) from software group by pname;</p>
+<p class="p3"><span class="s2"><b>25.</b></span><b> How old is the oldest male programmer</b></p>
+<p class="p1">select pname,extract(year from sysdate)-extract(year from dob) as<span class="Apple-converted-space">  </span>age from programmer where extract(year from sysdate)-extract(year from dob)=(select max(extract(year from sysdate)-extract(year from dob)) from programmer);</p>
+<p class="p3"><span class="s2"><b>26.</b></span><b> Identify and include the keys (Primary Keys &amp; Foreign Keys) in the tables</b></p>
+<p class="p3"><span class="s2"><b>27.</b></span><b> Display the names of programmers who have done the DAP course</b></p>
+<p class="p3">select pname from studies where course='dap';</p>
+<p class="p3"><b>28. How many female programmers knowing Cobol have more than 2 years experience</b></p>
+<p class="p3">select pname from programmer where gender='f' and (prof1='cobol' or prof2='cobol') and extract(year from sysdate)-extract(year from doj)&gt;2;</p>
+<p class="p3"><b>29. Display the number of software’s in each language except C and C++<span class="Apple-converted-space"> </span></b></p>
+<p class="p3">select dev,count(title),count(dev) from software where dev not in ('c','c++') group by dev;</p>
+<p class="p3"><b>30. How many programmers don’t know .NET and C</b></p>
+<p class="p3">select * from programmer where prof1 not in ('.net','c') and prof2 not in ('.net','c');</p>
+<p class="p3"><b>31. Display the details of software’s whose sales have been crossed 2000 mark</b></p>
+<p class="p3">select title from software where scost*sold-dcost&gt;2000;</p>
+<p class="p3"><b>32. Display the names of male and female programmers</b></p>
+<p class="p3">select pname from programmer where gender in ('m','f');</p>
+<p class="p3"><b>33. Display the name of the highest paid programmers for each language<span class="Apple-converted-space"> </span></b></p>
+<p class="p3">SELECT profession1, programmer_name, MAX(salary) AS highest_salary<span class="Apple-converted-space"> </span></p>
+<p class="p3">FROM Programmer GROUP BY profession1 ORDER BY highest_salary DESC;</p>
+<p class="p3"><span class="s2"><b>34.</b></span><b> Display the selling cost of software’s developed in each language<span class="Apple-converted-space"> </span></b></p>
+<p class="p1">SELECT platform_used, SUM(selling_cost) AS total_selling_cost FROM Software<span class="Apple-converted-space"> </span></p>
+<p class="p1">GROUP BY platform_used;</p>
+<p class="p3"><span class="s2"><b>35.</b></span><b> Calculate the experience in years for each programmer and display along with their names in descending order <span class="Apple-converted-space"> </span></b></p>
+<p class="p1">SELECT programmer_name, DATEDIFF(CURDATE(), date_of_joining) / 365 AS experience_years FROM Programmer ORDER BY experience_years DESC;</p>
+<p class="p6"><b>PL/SQL</b></p>
+<p class="p1"><b>EXP 1:</b></p>
+<p class="p1">SET SERVEROUTPUT ON</p>
+<p class="p1">DECLARE</p>
+<p class="p1">A NUMBER;</p>
+<p class="p1">B NUMBER DEFAULT 0;</p>
+<p class="p1">C B%TYPE;</p>
+<p class="p1">PI CONSTANT NUMBER(3,2):=3.14;</p>
+<p class="p1">BEGIN</p>
+<p class="p1">A:=&amp;n;</p>
+<p class="p1">C:=&amp;j;</p>
+<p class="p1">dbms_output.put_line('tHE VALUE OF A IS '||A);</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('tHE VALUE OF B IS '||B);</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('tHE VALUE OF C IS '||C);</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('tHE VALUE OF PI IS '||PI);</p>
+<p class="p1">END;</p>
+<p class="p1">/</p>
+<p class="p1"><b>OUTPUT:</b></p>
+<p class="p1">The Value of a is10</p>
+<p class="p1">The Value of b is0</p>
+<p class="p1">The Value of c is0</p>
+<p class="p1">The Value of pi is3.14</p>
+<p class="p1"><b>EXP 2:</b></p>
+<p class="p1">set serveroutput ON</p>
+<p class="p1">VARIABLE numb NUMBER;</p>
+<p class="p1">DECLARE</p>
+<p class="p1">a number;</p>
+<p class="p1">b number default 0;</p>
+<p class="p1">c b%TYPE;</p>
+<p class="p1">Pi constant number(3,2):=3.14;</p>
+<p class="p1">BEGIN</p>
+<p class="p1">a:=&amp;A;<span class="Apple-converted-space"> </span></p>
+<p class="p1">c:=b;</p>
+<p class="p1">:numb:=c;</p>
+<p class="p1">dbms_output.put_line('The Value of a is'||a);</p>
+<p class="p1">dbms_output.put_line('The Value of b is'||b);</p>
+<p class="p1">dbms_output.put_line('The Value of c is'||c);</p>
+<p class="p1">dbms_output.put_line('The Value of Constant pi is'||Pi);</p>
+<p class="p1">dbms_output.put_line('The Value of Bind variable numb is'||:numb);</p>
+<p class="p1">END;</p>
+<p class="p1">/</p>
+<p class="p1"><b>OUTPUT:</b></p>
+<p class="p1">Enter value for a: 20</p>
+<p class="p1">old <span class="Apple-converted-space">  </span>7: a:=&amp;A;</p>
+<p class="p1">new <span class="Apple-converted-space">  </span>7: a:=20;</p>
+<p class="p1">The Value of a is20</p>
+<p class="p1">The Value of b is0</p>
+<p class="p1">The Value of c is0</p>
+<p class="p1">The Value of Constant pi is3.14</p>
+<p class="p1">The Value of Bind variable numb is0</p>
+<p class="p7"><br></p>
+<p class="p1">PL/SQL procedure successfully completed</p>
+<p class="p1">EXP 3(SIMPLE IF):</p>
+<p class="p7"><br></p>
+<p class="p1">SET SERVEROUTPUT ON</p>
+<p class="p1">DECLARE</p>
+<p class="p1">A NUMBER;</p>
+<p class="p1">B NUMBER;</p>
+<p class="p1">C NUMBER;</p>
+<p class="p1">BEGIN</p>
+<p class="p1">A:=&amp;A;</p>
+<p class="p1">B:=&amp;B;</p>
+<p class="p1">IF A&gt;B THEN</p>
+<p class="p1">C:=A;</p>
+<p class="p1">A:=B;</p>
+<p class="p1">B:=C;</p>
+<p class="p1">END IF;</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('VALUE OF A '||A);</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('VALUE OF B '||B);</p>
+<p class="p1">END;</p>
+<p class="p1">/</p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p1">OUTPUT 1:</p>
+<p class="p1">Enter value for a: 10</p>
+<p class="p1">old <span class="Apple-converted-space">  </span>6: A:=&amp;A;</p>
+<p class="p1">new <span class="Apple-converted-space">  </span>6: A:=10;</p>
+<p class="p1">Enter value for b: 15</p>
+<p class="p1">old <span class="Apple-converted-space">  </span>7: B:=&amp;B;</p>
+<p class="p1">new <span class="Apple-converted-space">  </span>7: B:=15;</p>
+<p class="p1">VALUE OF A 10</p>
+<p class="p1">VALUE OF B 15</p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p1">OUTPUT 2:</p>
+<p class="p1">Enter value for a: 20</p>
+<p class="p1">old <span class="Apple-converted-space">  </span>6: A:=&amp;A;</p>
+<p class="p1">new <span class="Apple-converted-space">  </span>6: A:=20;</p>
+<p class="p1">Enter value for b: 10</p>
+<p class="p1">old <span class="Apple-converted-space">  </span>7: B:=&amp;B;</p>
+<p class="p1">new <span class="Apple-converted-space">  </span>7: B:=10;</p>
+<p class="p1">VALUE OF A 10</p>
+<p class="p1">VALUE OF B 20</p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p1">EXP 3(IF ELSE):</p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p1">SET SERVEROUTPUT ON</p>
+<p class="p1">DECLARE</p>
+<p class="p1">A NUMBER;</p>
+<p class="p1">B NUMBER;</p>
+<p class="p1">BEGIN</p>
+<p class="p1">A:=&amp;A;</p>
+<p class="p1">B:=&amp;B;</p>
+<p class="p1">IF MOD(A,2)=0 THEN</p>
+<p class="p1">dbms_output.put_line('A<span class="Apple-converted-space">  </span>is even number');</p>
+<p class="p1">ELSE</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('A IS ODD NUMBER');</p>
+<p class="p1">END IF;</p>
+<p class="p1">IF MOD(B,2)=0 THEN</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('B IS EVEN NUMBER');</p>
+<p class="p1">ELSE</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('B IS ODD NUMBER');</p>
+<p class="p1">END IF;</p>
+<p class="p1">END;</p>
+<p class="p1">/</p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p1">CASE</p>
+<p class="p7"><br></p>
+<p class="p1">SET SERVEROUTPUT ON</p>
+<p class="p1">DECLARE</p>
+<p class="p1">A NUMBER;</p>
+<p class="p1">BEGIN</p>
+<p class="p1">A :=&amp;ENTER_VALUE_OF_A;</p>
+<p class="p1">CASE<span class="Apple-converted-space"> </span></p>
+<p class="p1">WHEN A&gt;0 THEN</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('A IS POSITIVE');</p>
+<p class="p1">WHEN A&lt;0 THEN</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('A IS NEGATIVE');</p>
+<p class="p1">WHEN A=0 THEN</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('A IS ZERO');</p>
+<p class="p1">END CASE;</p>
+<p class="p1">END;</p>
+<p class="p1">/</p>
+<p class="p7"><br></p>
+<p class="p1">FOR LOOP</p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p1">SETSERVEROUTPUT ON</p>
+<p class="p1">DECLARE</p>
+<p class="p1">I NUMBER;</p>
+<p class="p1">BEGIN</p>
+<p class="p1">I:=&amp;ENTER_NUMBER_OF_ITERATIONS;</p>
+<p class="p1">FOR K IN REVERSE 1..I</p>
+<p class="p1">LOOP</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE(K);</p>
+<p class="p1">END LOOP;</p>
+<p class="p1">END;</p>
+<p class="p1">/</p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p1">WHILE LOOP</p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p1">SET SERVEROUTPUT ON</p>
+<p class="p1">DECLARE</p>
+<p class="p1">I NUMBER;</p>
+<p class="p1">K NUMBER :=0;</p>
+<p class="p1">BEGIN</p>
+<p class="p1">I :=&amp;ENTER_NO_OF_ITERATIONS;</p>
+<p class="p1">WHILE K&lt;=I</p>
+<p class="p1">LOOP</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE(K);</p>
+<p class="p1">K:=K+1;</p>
+<p class="p1">END LOOP;</p>
+<p class="p1">END;</p>
+<p class="p1">/</p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p1">CURSORS</p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p1">SET SERVEROUTPUT ON</p>
+<p class="p1">DECLARE</p>
+<p class="p1">C_PNAME STUDIES.PNAME%TYPE;</p>
+<p class="p1">C_SPLACE STUDIES.SPLACE%TYPE;</p>
+<p class="p1">C_COURSE STUDIES.COURSE%TYPE;</p>
+<p class="p1">C_COST STUDIES.COST%TYPE;</p>
+<p class="p1">CURSOR C_STUDIES IS SELECT PNAME,SPLACE,COURSE,COST FROM STUDIES;</p>
+<p class="p1">BEGIN</p>
+<p class="p1">OPEN C_STUDIES;</p>
+<p class="p1">LOOP</p>
+<p class="p1">FETCH C_STUDIES INTO C_PNAME,C_SPLACE,C_COURSE,C_COST;</p>
+<p class="p1">EXIT WHEN C_STUDIES%NOTFOUND;</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE(C_PNAME||'<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span> '||C_SPLACE||'<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span> '||C_COURSE||'<span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span> '||C_COST);</p>
+<p class="p1">END LOOP;</p>
+<p class="p1">CLOSE C_STUDIES;</p>
+<p class="p1">END;</p>
+<p class="p1">/</p>
+<p class="p7"><br></p>
+<p class="p1">CURSOR PRACTICE PROGRAMS</p>
+<p class="p7"><br></p>
+<p class="p1">1.</p>
+<p class="p7"><br></p>
+<p class="p1">SET SERVEROUTPUT ON</p>
+<p class="p1">DECLARE</p>
+<p class="p1">C_PNAME STUDIES.PNAME%TYPE;</p>
+<p class="p1">CURSOR C_STUDIES IS SELECT PNAME FROM STUDIES;</p>
+<p class="p1">BEGIN</p>
+<p class="p1">OPEN C_STUDIES;</p>
+<p class="p1">LOOP</p>
+<p class="p1">FETCH C_STUDIES INTO C_PNAME;</p>
+<p class="p1">EXIT WHEN C_STUDIES%NOTFOUND;</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE(C_PNAME);</p>
+<p class="p1">END LOOP;</p>
+<p class="p1">CLOSE C_STUDIES;</p>
+<p class="p1">END;</p>
+<p class="p1">/</p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p1">2.</p>
+<p class="p7"><br></p>
+<p class="p1">SET SERVEROUTPUT ON</p>
+<p class="p1">DECLARE</p>
+<p class="p1">C_SPLACE STUDIES.SPLACE%TYPE;</p>
+<p class="p1">CURSOR C_STUDIES IS SELECT SPLACE FROM STUDIES;</p>
+<p class="p1">BEGIN</p>
+<p class="p1">OPEN C_STUDIES;</p>
+<p class="p1">LOOP</p>
+<p class="p1">FETCH C_STUDIES INTO C_SPLACE;</p>
+<p class="p1">EXIT WHEN C_STUDIES%NOTFOUND;</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE(C_SPLACE);</p>
+<p class="p1">END LOOP;</p>
+<p class="p1">CLOSE C_STUDIES;</p>
+<p class="p1">END;</p>
+<p class="p1">/</p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p1">EXCEPTIONS</p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p1">SET SERVEROUTPUT ON</p>
+<p class="p1">DECLARE</p>
+<p class="p1">A NUMBER;</p>
+<p class="p1">B NUMBER;</p>
+<p class="p1">BEGIN</p>
+<p class="p1">A :=&amp;ENTER_A;</p>
+<p class="p1">B :=&amp;ENTER_B;</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('A/B IS '||A/B);</p>
+<p class="p1">EXCEPTION WHEN ZERO_DIVIDE THEN</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('CANNOT DIVIDE WITH ZERO');</p>
+<p class="p1">END;</p>
+<p class="p1">/</p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p1">RECORD</p>
+<p class="p7"><br></p>
+<p class="p1">SET SERVEROUTPUT ON</p>
+<p class="p1">DECLARE<span class="Apple-converted-space"> </span></p>
+<p class="p1">STUDIES_REC STUDIES%ROWTYPE;</p>
+<p class="p1">BEGIN</p>
+<p class="p1">SELECT * INTO STUDIES_REC FROM STUDIES WHERE PNAME='MARY';</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('NAME : '||STUDIES_REC.PNAME);</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('SPLACE : '||STUDIES_REC.SPLACE);</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('COURSE : '||STUDIES_REC.COURSE);</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('COST : '||STUDIES_REC.COST);</p>
+<p class="p1">END;</p>
+<p class="p1">/</p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p1">PRACTICE PROGRAMS FOR RECORDS</p>
+<p class="p7"><br></p>
+<p class="p1">1.</p>
+<p class="p7"><br></p>
+<p class="p1">SET SERVEROUTPUT ON</p>
+<p class="p1">DECLARE<span class="Apple-converted-space"> </span></p>
+<p class="p1">STUDIES_REC STUDIES%ROWTYPE;</p>
+<p class="p1">BEGIN</p>
+<p class="p1">SELECT * INTO STUDIES_REC FROM STUDIES WHERE PNAME='VIJAYA';</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('NAME : '||STUDIES_REC.PNAME);</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('SPLACE : '||STUDIES_REC.SPLACE);</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('COURSE : '||STUDIES_REC.COURSE);</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('COST : '||STUDIES_REC.COST);</p>
+<p class="p1">END;</p>
+<p class="p1">/</p>
+<p class="p7"><br></p>
+<p class="p1">VARRAY</p>
+<p class="p7"><br></p>
+<p class="p1">SET SERVEROUTPUT ON</p>
+<p class="p1">DECLARE<span class="Apple-converted-space"> </span></p>
+<p class="p1">STUDIES_REC STUDIES%ROWTYPE;</p>
+<p class="p1">BEGIN</p>
+<p class="p1">SELECT * INTO STUDIES_REC FROM STUDIES WHERE PNAME='VIJAYA';</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('NAME : '||STUDIES_REC.PNAME);</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('SPLACE : '||STUDIES_REC.SPLACE);</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('COURSE : '||STUDIES_REC.COURSE);</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('COST : '||STUDIES_REC.COST);</p>
+<p class="p1">END;</p>
+<p class="p1">/</p>
+<p class="p7"><br></p>
+<p class="p1">SET SERVEROUTPUT ON</p>
+<p class="p1">DECLARE</p>
+<p class="p1">TYPE NAMESARRAY IS VARRAY(3) of VARCHAR(10);</p>
+<p class="p1">NAMES NAMESARRAY;</p>
+<p class="p1">BEGIN</p>
+<p class="p1">NAMES := NAMESARRAY('RAMESH','SURESH','KAMLESH');</p>
+<p class="p1">FOR I IN 1..NAMES.COUNT<span class="Apple-converted-space"> </span></p>
+<p class="p1">LOOP</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE(NAMES(I));</p>
+<p class="p1">END LOOP;</p>
+<p class="p1">END;</p>
+<p class="p1">/</p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p1">PRACTICE PROGRAMS</p>
+<p class="p7"><br></p>
+<p class="p1">1.</p>
+<p class="p7"><br></p>
+<p class="p1">SET SERVEROUTPUT ON</p>
+<p class="p1">DECLARE</p>
+<p class="p1">TYPE NAMESARRA IS VARRAY(3) OF VARCHAR(20);</p>
+<p class="p1">NAMES NAMESARRA;</p>
+<p class="p1">BEGIN</p>
+<p class="p1">NAMES:= NAMESARRA('rASHEED','HEMANTH','NAYUM');</p>
+<p class="p1">FOR I IN 1..NAMES.COUNT</p>
+<p class="p1">LOOP</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE(NAMES(I));</p>
+<p class="p1">END LOOP;</p>
+<p class="p1">END;</p>
+<p class="p1">/</p>
+<p class="p7"><br></p>
+<p class="p1">2.</p>
+<p class="p7"><br></p>
+<p class="p1">DECLARE</p>
+<p class="p1">TYPE RASHEED IS VARRAY(10) OF INTEGER(2);</p>
+<p class="p1">NAMES RASHEED;</p>
+<p class="p1">BEGIN</p>
+<p class="p1">NAMES := RASHEED(1,2,5,6,7,11,13,15,27,28);</p>
+<p class="p1">FOR I IN 1..NAMES.COUNT</p>
+<p class="p1">LOOP</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE(NAMES(I));</p>
+<p class="p1">END LOOP;</p>
+<p class="p1">END;</p>
+<p class="p1">/</p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p1">PROCEDURES</p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p1">DECLARE<span class="Apple-converted-space"> </span></p>
+<p class="p1">A NUMBER;</p>
+<p class="p1">B NUMBER;</p>
+<p class="p1">C NUMBER;</p>
+<p class="p1">PROCEDURE ADD(X IN NUMBER, Y IN NUMBER, Z OUT NUMBER) IS</p>
+<p class="p1">BEGIN</p>
+<p class="p1">Z:=X+Y;</p>
+<p class="p1">END;</p>
+<p class="p1">BEGIN</p>
+<p class="p1">A:=10;</p>
+<p class="p1">B:=20;</p>
+<p class="p1">ADD(A,B,C);</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE('ADDITION OD A AND B IS '||C);</p>
+<p class="p1">END;</p>
+<p class="p1">/</p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p1">CREATION OF A PROCEDURE</p>
+<p class="p7"><br></p>
+<p class="p1">CREATE OR REPLACE PROCEDURE ADDITION (X IN NUMBER, Y IN NUMBER, Z OUT NUMBER) IS</p>
+<p class="p1">BEGIN</p>
+<p class="p1">Z:=X+Y;</p>
+<p class="p1">END;</p>
+<p class="p1">/</p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p1">DECLARE</p>
+<p class="p1">A NUMBER;</p>
+<p class="p1">B NUMBER;</p>
+<p class="p1">C NUMBER;</p>
+<p class="p1">BEGIN</p>
+<p class="p1">A:=10;</p>
+<p class="p1">B:=20;</p>
+<p class="p1">ADDITION(A,B,C);</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE(C);</p>
+<p class="p1">END;</p>
+<p class="p1">/</p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p1">FUNCTIONS</p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p1">SET SERVEROUTPUT ON</p>
+<p class="p1">DECLARE</p>
+<p class="p1">A NUMBER;</p>
+<p class="p1">B NUMBER;</p>
+<p class="p1">C NUMBER;</p>
+<p class="p1">FUNCTION SAMPLE(X IN NUMBER,Y IN NUMBER) RETURN NUMBER IS</p>
+<p class="p1">Z NUMBER;</p>
+<p class="p1">BEGIN</p>
+<p class="p1">Z:=X+Y;</p>
+<p class="p1">RETURN Z;</p>
+<p class="p1">END;</p>
+<p class="p1">BEGIN</p>
+<p class="p1">A:=10;</p>
+<p class="p1">B:=20;</p>
+<p class="p1">C:=SAMPLE(A,B);</p>
+<p class="p1">DBMS_OUTPUT.PUT_LINE(C);</p>
+<p class="p1">END;</p>
+<p class="p1">/</p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p1">FUNCTION DECLARATION</p>
+<p class="p7"><br></p>
+<p class="p7"><br></p>
+<p class="p1">CREATE OR REPLACE FUNCTION ADDITION2(X IN NUMBER , Y IN NUMBER) RETURN NUMBER AS</p>
+<p class="p1">Z NUMBER;</p>
+<p class="p1">BEGIN</p>
+<p class="p1">Z:=X+Y;</p>
+<p class="p1">RETURN Z;</p>
+<p class="p1">END;</p>
+<p class="p1">/</p>
+<p class="p7"><br></p>
+</body>
+</html>
